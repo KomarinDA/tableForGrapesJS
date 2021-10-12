@@ -4,7 +4,6 @@ const editor = grapesjs.init({
   height: '800px',
   width: 'auto',
   storageManager: false,
-  panels: { defaults: [] },
   blockManager: {
     appendTo: '#blocks',
     blocks: [
@@ -31,6 +30,20 @@ const editor = grapesjs.init({
   },
   layerManager: {
     appendTo: '.layers-container'
+  },
+  deviceManager: {
+    devices: [{
+        name: 'Desktop',
+        width: '', // default size
+      },{
+        name: 'Tablet',
+        width: '768px', // this value will be used on canvas width
+        widthMedia: '1200px', // this value will be used in CSS @media
+      }, {
+        name: 'Mobile',
+        width: '320px', // this value will be used on canvas width
+        widthMedia: '480px', // this value will be used in CSS @media
+    }]
   },
   // We define a default panel as a sidebar to contain layers
   panels: {
@@ -72,6 +85,26 @@ const editor = grapesjs.init({
         command: 'show-traits',
         togglable: false,
     }],
+    }, {
+      id: 'panel-devices',
+      el: '.panel__devices',
+      buttons: [{
+          id: 'device-desktop',
+          label: 'D',
+          command: 'set-device-desktop',
+          active: true,
+          togglable: false,
+        }, {
+          id: 'device-tablet',
+          label: 'T',
+          command: 'set-device-tablet',
+          togglable: false,
+      }, {
+          id: 'device-mobile',
+          label: 'M',
+          command: 'set-device-mobile',
+          togglable: false,
+      }],
     } ]
   },
   traitManager: {
@@ -199,4 +232,15 @@ editor.Commands.add('show-traits', {
   stop(editor, sender) {
     this.getTraitsEl(editor).style.display = 'none';
   },
+});
+
+// Commands
+editor.Commands.add('set-device-desktop', {
+  run: editor => editor.setDevice('Desktop')
+});
+editor.Commands.add('set-device-tablet', {
+  run: editor => editor.setDevice('Tablet')
+});
+editor.Commands.add('set-device-mobile', {
+  run: editor => editor.setDevice('Mobile')
 });
