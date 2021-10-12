@@ -65,8 +65,17 @@ const editor = grapesjs.init({
           label: 'Styles',
           command: 'show-styles',
           togglable: false,
-      }],
+      }, {
+        id: 'show-traits',
+        active: true,
+        label: 'Traits',
+        command: 'show-traits',
+        togglable: false,
+    }],
     } ]
+  },
+  traitManager: {
+    appendTo: '.traits-container',
   },
   selectorManager: {
     appendTo: '.styles-container'
@@ -164,6 +173,7 @@ editor.Commands.add('show-layers', {
     lmEl.style.display = 'none';
   },
 });
+
 editor.Commands.add('show-styles', {
   getRowEl(editor) { return editor.getContainer().closest('.editor-row'); },
   getStyleEl(row) { return row.querySelector('.styles-container') },
@@ -175,5 +185,18 @@ editor.Commands.add('show-styles', {
   stop(editor, sender) {
     const smEl = this.getStyleEl(this.getRowEl(editor));
     smEl.style.display = 'none';
+  },
+});
+
+editor.Commands.add('show-traits', {
+  getTraitsEl(editor) {
+    const row = editor.getContainer().closest('.editor-row');
+    return row.querySelector('.traits-container');
+  },
+  run(editor, sender) {
+    this.getTraitsEl(editor).style.display = '';
+  },
+  stop(editor, sender) {
+    this.getTraitsEl(editor).style.display = 'none';
   },
 });
