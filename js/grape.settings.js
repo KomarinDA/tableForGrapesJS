@@ -7,22 +7,22 @@ const editor = grapesjs.init({
   width: 'auto',
   plugins: [blockTablePlugins],
   storageManager: {
-    id: 'gjs-',             // Prefix identifier that will be used inside storing and loading
-    type: 'local',          // Type of the storage
-    autosave: false,         // Store data automatically
-    autoload: true,         // Autoload stored data on init
-    stepsBeforeSave: 1,     // If autosave enabled, indicates how many changes are necessary before store method is triggered
-    storeComponents: true,  // Enable/Disable storing of components in JSON format
-    storeStyles: true,      // Enable/Disable storing of rules in JSON format
-    storeHtml: true,        // Enable/Disable storing of components as HTML string
-    storeCss: true,         // Enable/Disable storing of rules as CSS string
+    id: 'gjs-',
+    type: 'local',
+    autosave: false,
+    autoload: true,
+    stepsBeforeSave: 1,
+    storeComponents: true,
+    storeStyles: true,
+    storeHtml: true,
+    storeCss: true,
   },
   blockManager: {
     appendTo: '#blocks',
     blocks: [
       {
-        id: 'section', // id is mandatory
-        label: '<b>Section</b>', // You can use HTML/SVG inside labels
+        id: 'section',
+        label: '<b>Section</b>',
         attributes: { class: 'gjs-block-section' },
         content: `<section>
           <h1>This is a simple title</h1>
@@ -47,32 +47,28 @@ const editor = grapesjs.init({
   deviceManager: {
     devices: [{
       name: 'Desktop',
-      width: '', // default size
+      width: '',
     }, {
       name: 'Tablet',
-      width: '768px', // this value will be used on canvas width
-      widthMedia: '1200px', // this value will be used in CSS @media
+      width: '768px',
+      widthMedia: '1200px',
     }, {
       name: 'Mobile',
-      width: '320px', // this value will be used on canvas width
-      widthMedia: '480px', // this value will be used in CSS @media
+      width: '320px',
+      widthMedia: '480px',
     }]
   },
-  // We define a default panel as a sidebar to contain layers
   panels: {
     defaults: [{
       id: 'layers',
       el: '.panel__right',
-      // Make the panel resizable
       resizable: {
         maxDim: 350,
         minDim: 200,
-        tc: 0, // Top handler
-        cl: 1, // Left handler
-        cr: 0, // Right handler
-        bc: 0, // Bottom handler
-        // Being a flex child we need to change `flex-basis` property
-        // instead of the `width` (default)
+        tc: 0,
+        cl: 1,
+        cr: 0,
+        bc: 0,
         keyWidth: 'flex-basis',
       },
     }, {
@@ -83,7 +79,6 @@ const editor = grapesjs.init({
         active: true,
         label: 'Layers',
         command: 'show-layers',
-        // Once activated disable the possibility to turn it off
         togglable: false,
       }, {
         id: 'show-style',
@@ -135,11 +130,11 @@ const editor = grapesjs.init({
       properties: [
         {
           type: 'integer',
-          name: 'The width', // Label for the property
-          property: 'width', // CSS property (if buildProps contains it will be extended)
-          units: ['px', '%'], // Units, available only for 'integer' types
-          defaults: 'auto', // Default value
-          min: 0, // Min value, available only for 'integer' types
+          name: 'The width',
+          property: 'width',
+          units: ['px', '%'],
+          defaults: 'auto',
+          min: 0,
         }
       ]
     }, {
@@ -153,7 +148,6 @@ const editor = grapesjs.init({
           property: 'font-size',
           type: 'select',
           defaults: '32px',
-          // List of options, available only for 'select' and 'radio'  types
           options: [
             { value: '12px', name: 'Tiny' },
             { value: '18px', name: 'Medium' },
@@ -175,16 +169,16 @@ editor.Panels.addPanel({
   buttons: [
     {
       id: 'visibility',
-      active: true, // active by default
+      active: true,
       className: 'btn-toggle-borders',
       label: '<u>B</u>',
-      command: 'sw-visibility', // Built-in command
+      command: 'sw-visibility',
     }, {
       id: 'export',
       className: 'btn-open-export',
       label: 'Exp',
       command: 'export-template',
-      context: 'export-template', // For grouping context of buttons from the same panel
+      context: 'export-template',
     }, {
       id: 'show-json',
       className: 'btn-show-json',
@@ -253,50 +247,3 @@ editor.Commands.add('set-device-tablet', {
 editor.Commands.add('set-device-mobile', {
   run: editor => editor.setDevice('Mobile')
 });
-
-// editor.BlockManager.add('imgSection', {
-//   label: 'Section',
-//   attributes: { class: 'fa fa-table' },
-//   content: `<section class="section-main">
-//   <div class="block-main">
-//     <img class="block-main--img" src="https://i.forfun.com/jc06tp01.jpeg" alt="">
-//     <h1 class="block-main--title">
-//       Cool Framework GrapesJS
-//     </h1>
-//     <p class="block-main--subtitle">use effectively</p>
-//   </div>
-// </section>
-//   <style>
-//   .section-main{
-//     position: relative;
-//     height: 100vh;
-//     width: 100%;
-//     margin: 0;
-//     padding: 0;
-//   }
-//   .block-main--img{
-//     position: absolute;
-//     display: block;
-//     top: 10vh;
-//     left: 10vw;
-//     width: 25vw;
-//     max-height: 80vh;
-//     height: auto;
-//   }
-//   .block-main--title{
-//     position: absolute;
-//     bottom: 20vh;
-//     left: 30vw;
-//     font-size: 2rem;
-//     color: aqua;
-//     text-transform: uppercase;
-//   }
-//   .block-main--subtitle{
-//     position: absolute;
-//     bottom: 10vh;
-//     left: 40vw;
-//     font-size: 1.4rem;
-//     color: aquamarine;
-//     text-transform: uppercase;
-//   }</style>`
-// })
