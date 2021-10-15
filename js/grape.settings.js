@@ -1,8 +1,11 @@
+import blockTablePlugins from './plugins/block-table-plugins.js';
+
 const editor = grapesjs.init({
   container: '#gjs',
   fromElement: true,
   height: 'calc(100vh - 154px)',
   width: 'auto',
+  plugins: [blockTablePlugins],
   storageManager: {
     id: 'gjs-',             // Prefix identifier that will be used inside storing and loading
     type: 'local',          // Type of the storage
@@ -251,279 +254,49 @@ editor.Commands.add('set-device-mobile', {
   run: editor => editor.setDevice('Mobile')
 });
 
-editor.BlockManager.add('testtwoBlock', {
-  label: 'Table',
-  attributes: { class: 'fa fa-table' },
-  content: `<div class="table-div"><div>Этот текст</div><div>2</div><div>3</div><div>4</div></div><style>.table-div{display:flex;justify-content:space-around;background:green;}</style>`
-})
-
-editor.BlockManager.add('imgSection', {
-  label: 'Section',
-  attributes: { class: 'fa fa-table' },
-  content: `<section class="section-main">
-  <div class="block-main">
-    <img class="block-main--img" src="https://i.forfun.com/jc06tp01.jpeg" alt="">
-    <h1 class="block-main--title">
-      Cool Framework GrapesJS
-    </h1>
-    <p class="block-main--subtitle">use effectively</p>
-  </div>
-</section>
-  <style>
-  .section-main{
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  .block-main--img{
-    position: absolute;
-    display: block;
-    top: 10vh;
-    left: 10vw;
-    width: 25vw;
-    max-height: 80vh;
-    height: auto;
-  }
-  .block-main--title{
-    position: absolute;
-    bottom: 20vh;
-    left: 30vw;
-    font-size: 2rem;
-    color: aqua;
-    text-transform: uppercase;
-  }
-  .block-main--subtitle{
-    position: absolute;
-    bottom: 10vh;
-    left: 40vw;
-    font-size: 1.4rem;
-    color: aquamarine;
-    text-transform: uppercase;
-  }</style>`
-})
-
-editor.BlockManager.add('newTableDiv', {
-  label: 'Table DIV',
-  attributes: { class: 'fa fa-table' },
-  draggable: false,
-  content: ` <div class="t-block">
-  <div class="t-block--row">
-    <div class="t-block--item">Текст 1</div>
-    <div class="t-block--item">Текст 2</div>
-    <div class="t-block--item">Текст 3</div>
-    <div class="t-block--item">Текст 4</div>
-  </div>
-  <div class="t-block--row">
-    <div class="t-block--item">Текст 1</div>
-    <div class="t-block--item">Текст 2</div>
-    <div class="t-block--item">Текст 3</div>
-    <div class="t-block--item">Текст 4</div>
-  </div>
-  <div class="t-block--row">
-    <div class="t-block--item">Текст 1</div>
-    <div class="t-block--item">Текст 2</div>
-    <div class="t-block--item">Текст 3</div>
-    <div class="t-block--item">Текст 4</div>
-  </div>
-  <div class="t-block--row">
-    <div class="t-block--item">Текст 1</div>
-    <div class="t-block--item">Текст 2</div>
-    <div class="t-block--item">Текст 3</div>
-    <div class="t-block--item">Текст 4</div>
-  </div>
-  <div class="t-block--row">
-    <div class="t-block--item">Текст 1</div>
-    <div class="t-block--item">Текст 2</div>
-    <div class="t-block--item">Текст 3</div>
-    <div class="t-block--item">Текст 4</div>
-  </div>
-  <div class="t-block--row">
-    <div class="t-block--item">Текст 1</div>
-    <div class="t-block--item">Текст 2</div>
-    <div class="t-block--item">Текст 3</div>
-    <div class="t-block--item">Текст 4</div>
-  </div>
-  <div class="t-block--row">
-    <div class="t-block--item">Текст 1</div>
-    <div class="t-block--item">Текст 2</div>
-    <div class="t-block--item">Текст 3</div>
-    <div class="t-block--item">Текст 4</div>
-  </div>
-  <div class="t-block--row">
-    <div class="t-block--item">Текст 1</div>
-    <div class="t-block--item">Текст 2</div>
-    <div class="t-block--item">Текст 3</div>
-    <div class="t-block--item">Текст 4</div>
-  </div>
-</div>
-<style>
-.t-block{
-  width: 100%;
-  height: auto;
-  margin: 25px 0;
-  padding: 0;
-}
-.t-block--row{
-  display: flex;
-  justify-content: space-between;
-}
-.t-block--item{
-  width: 25%;
-  margin-bottom: -1px;
-  padding: 5px;
-  border: 1px solid #666;
-}
-</style>`
-});
-
-
-editor.BlockManager.add('newTableTable', {
-  label: 'Table tag Table',
-  attributes: { class: 'fa fa-table' },
-  draggable: false,
-  content: ` <table class="table">
-  <tr data-gjs-draggable="none">
-      <td data-gjs-draggable="none"><p data-gjs-draggable="none">Текст</p></td>
-      <td data-gjs-draggable="none"><p data-gjs-draggable="none">Текст</p></td>
-      <td data-gjs-draggable="none"><p data-gjs-draggable="none">Текст</p></td>
-      <td data-gjs-draggable="none"><p data-gjs-draggable="none">Текст</p></td>
-  </tr>
-  <tr>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-  </tr>
-  <tr>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-  </tr>
-  <tr>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-  </tr>
-  <tr>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-  </tr>
-  <tr>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-  </tr>
-  <tr>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-  </tr>
-  <tr>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-      <td><p>Текст</p></td>
-  </tr>
-</table>
-<style>
-.table{
-  width: 100%; 
-  margin: 0;
-  border-collapse: collapse;
-  padding: 0;
- }
- .table tr {
-   width: 100%;
-   margin: 0;
-   padding: 0;
- }
- .table tr td{
-   width: 25%;
-   margin: -1px;
-   padding: 5px;
-   font-size: 14px;
-   border: 1px solid #666
- }
- .table tr td p{
-   margin: 0
- }
-</style>`
-});
-
-
-let d = document.getElementsByClassName('.d');
-console.log(d);
-
-// editor.Components.addType('my-cmp', {
-//   classes: ['cls'],
-//   content: `<div class="t-block">
-//   <div class="t-block--row">
-//     <div class="t-block--item">Текст 1</div>
-//     <div class="t-block--item">Текст 2</div>
-//     <div class="t-block--item">Текст 3</div>
-//     <div class="t-block--item">Текст 4</div>
+// editor.BlockManager.add('imgSection', {
+//   label: 'Section',
+//   attributes: { class: 'fa fa-table' },
+//   content: `<section class="section-main">
+//   <div class="block-main">
+//     <img class="block-main--img" src="https://i.forfun.com/jc06tp01.jpeg" alt="">
+//     <h1 class="block-main--title">
+//       Cool Framework GrapesJS
+//     </h1>
+//     <p class="block-main--subtitle">use effectively</p>
 //   </div>
-//   <div class="t-block--row">
-//     <div class="t-block--item">Текст 1</div>
-//     <div class="t-block--item">Текст 2</div>
-//     <div class="t-block--item">Текст 3</div>
-//     <div class="t-block--item">Текст 4</div>
-//   </div>
-//   <div class="t-block--row">
-//     <div class="t-block--item">Текст 1</div>
-//     <div class="t-block--item">Текст 2</div>
-//     <div class="t-block--item">Текст 3</div>
-//     <div class="t-block--item">Текст 4</div>
-//   </div>
-//   <div class="t-block--row">
-//     <div class="t-block--item">Текст 1</div>
-//     <div class="t-block--item">Текст 2</div>
-//     <div class="t-block--item">Текст 3</div>
-//     <div class="t-block--item">Текст 4</div>
-//   </div>
-//   <div class="t-block--row">
-//     <div class="t-block--item">Текст 1</div>
-//     <div class="t-block--item">Текст 2</div>
-//     <div class="t-block--item">Текст 3</div>
-//     <div class="t-block--item">Текст 4</div>
-//   </div>
-//   <div class="t-block--row">
-//     <div class="t-block--item">Текст 1</div>
-//     <div class="t-block--item">Текст 2</div>
-//     <div class="t-block--item">Текст 3</div>
-//     <div class="t-block--item">Текст 4</div>
-//   </div>
-//   <div class="t-block--row">
-//     <div class="t-block--item">Текст 1</div>
-//     <div class="t-block--item">Текст 2</div>
-//     <div class="t-block--item">Текст 3</div>
-//     <div class="t-block--item">Текст 4</div>
-//   </div>
-//   <div class="t-block--row">
-//     <div class="t-block--item">Текст 1</div>
-//     <div class="t-block--item">Текст 2</div>
-//     <div class="t-block--item">Текст 3</div>
-//     <div class="t-block--item">Текст 4</div>
-//   </div>
-// </div>`,
-//   model: {
-//     defaults: {
-//       prop1: 'value1',
-//       prop2: 'value2',
-//     }
+// </section>
+//   <style>
+//   .section-main{
+//     position: relative;
+//     height: 100vh;
+//     width: 100%;
+//     margin: 0;
+//     padding: 0;
 //   }
-// });
-
-
-// editor.BlockManager.add('testBlockNewnewnew', {
-//   label: 'Block New 111',
-//   content: { type: 'my-cmp', prop1: 'value1-EXT', prop2: 'value2-EXT' }
+//   .block-main--img{
+//     position: absolute;
+//     display: block;
+//     top: 10vh;
+//     left: 10vw;
+//     width: 25vw;
+//     max-height: 80vh;
+//     height: auto;
+//   }
+//   .block-main--title{
+//     position: absolute;
+//     bottom: 20vh;
+//     left: 30vw;
+//     font-size: 2rem;
+//     color: aqua;
+//     text-transform: uppercase;
+//   }
+//   .block-main--subtitle{
+//     position: absolute;
+//     bottom: 10vh;
+//     left: 40vw;
+//     font-size: 1.4rem;
+//     color: aquamarine;
+//     text-transform: uppercase;
+//   }</style>`
 // })
