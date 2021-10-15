@@ -1,16 +1,26 @@
 const editor = grapesjs.init({
   container: '#gjs',
   fromElement: true,
-  height: '800px',
+  height: 'calc(100vh - 154px)',
   width: 'auto',
-  storageManager: false,
+  storageManager: {
+    id: 'gjs-',             // Prefix identifier that will be used inside storing and loading
+    type: 'local',          // Type of the storage
+    autosave: false,         // Store data automatically
+    autoload: true,         // Autoload stored data on init
+    stepsBeforeSave: 1,     // If autosave enabled, indicates how many changes are necessary before store method is triggered
+    storeComponents: true,  // Enable/Disable storing of components in JSON format
+    storeStyles: true,      // Enable/Disable storing of rules in JSON format
+    storeHtml: true,        // Enable/Disable storing of components as HTML string
+    storeCss: true,         // Enable/Disable storing of rules as CSS string
+  },
   blockManager: {
     appendTo: '#blocks',
     blocks: [
       {
         id: 'section', // id is mandatory
         label: '<b>Section</b>', // You can use HTML/SVG inside labels
-        attributes: { class:'gjs-block-section' },
+        attributes: { class: 'gjs-block-section' },
         content: `<section>
           <h1>This is a simple title</h1>
           <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
@@ -33,16 +43,16 @@ const editor = grapesjs.init({
   },
   deviceManager: {
     devices: [{
-        name: 'Desktop',
-        width: '', // default size
-      },{
-        name: 'Tablet',
-        width: '768px', // this value will be used on canvas width
-        widthMedia: '1200px', // this value will be used in CSS @media
-      }, {
-        name: 'Mobile',
-        width: '320px', // this value will be used on canvas width
-        widthMedia: '480px', // this value will be used in CSS @media
+      name: 'Desktop',
+      width: '', // default size
+    }, {
+      name: 'Tablet',
+      width: '768px', // this value will be used on canvas width
+      widthMedia: '1200px', // this value will be used in CSS @media
+    }, {
+      name: 'Mobile',
+      width: '320px', // this value will be used on canvas width
+      widthMedia: '480px', // this value will be used in CSS @media
     }]
   },
   // We define a default panel as a sidebar to contain layers
@@ -66,46 +76,46 @@ const editor = grapesjs.init({
       id: 'panel-switcher',
       el: '.panel__switcher',
       buttons: [{
-          id: 'show-layers',
-          active: true,
-          label: 'Layers',
-          command: 'show-layers',
-          // Once activated disable the possibility to turn it off
-          togglable: false,
-        }, {
-          id: 'show-style',
-          active: true,
-          label: 'Styles',
-          command: 'show-styles',
-          togglable: false,
+        id: 'show-layers',
+        active: true,
+        label: 'Layers',
+        command: 'show-layers',
+        // Once activated disable the possibility to turn it off
+        togglable: false,
+      }, {
+        id: 'show-style',
+        active: true,
+        label: 'Styles',
+        command: 'show-styles',
+        togglable: false,
       }, {
         id: 'show-traits',
         active: true,
         label: 'Traits',
         command: 'show-traits',
         togglable: false,
-    }],
+      }],
     }, {
       id: 'panel-devices',
       el: '.panel__devices',
       buttons: [{
-          id: 'device-desktop',
-          label: 'D',
-          command: 'set-device-desktop',
-          active: true,
-          togglable: false,
-        }, {
-          id: 'device-tablet',
-          label: 'T',
-          command: 'set-device-tablet',
-          togglable: false,
+        id: 'device-desktop',
+        label: 'D',
+        command: 'set-device-desktop',
+        active: true,
+        togglable: false,
       }, {
-          id: 'device-mobile',
-          label: 'M',
-          command: 'set-device-mobile',
-          togglable: false,
+        id: 'device-tablet',
+        label: 'T',
+        command: 'set-device-tablet',
+        togglable: false,
+      }, {
+        id: 'device-mobile',
+        label: 'M',
+        command: 'set-device-mobile',
+        togglable: false,
       }],
-    } ]
+    }]
   },
   traitManager: {
     appendTo: '.traits-container',
@@ -116,43 +126,39 @@ const editor = grapesjs.init({
   styleManager: {
     appendTo: '.styles-container',
     sectors: [{
-        name: 'Dimension',
-        open: false,
-        // Use built-in properties
-        buildProps: ['width', 'min-height', 'padding'],
-        // Use `properties` to define/override single property
-        properties: [
-          {
-            // Type of the input,
-            // options: integer | radio | select | color | slider | file | composite | stack
-            type: 'integer',
-            name: 'The width', // Label for the property
-            property: 'width', // CSS property (if buildProps contains it will be extended)
-            units: ['px', '%'], // Units, available only for 'integer' types
-            defaults: 'auto', // Default value
-            min: 0, // Min value, available only for 'integer' types
-          }
-        ]
-      },{
-        name: 'Extra',
-        open: false,
-        buildProps: ['background-color', 'box-shadow', 'custom-prop'],
-        properties: [
-          {
-            id: 'custom-prop',
-            name: 'Custom Label',
-            property: 'font-size',
-            type: 'select',
-            defaults: '32px',
-            // List of options, available only for 'select' and 'radio'  types
-            options: [
-              { value: '12px', name: 'Tiny' },
-              { value: '18px', name: 'Medium' },
-              { value: '32px', name: 'Big' },
-            ],
-         }
-        ]
-      }]
+      name: 'Dimension',
+      open: false,
+      buildProps: ['width', 'min-height', 'padding'],
+      properties: [
+        {
+          type: 'integer',
+          name: 'The width', // Label for the property
+          property: 'width', // CSS property (if buildProps contains it will be extended)
+          units: ['px', '%'], // Units, available only for 'integer' types
+          defaults: 'auto', // Default value
+          min: 0, // Min value, available only for 'integer' types
+        }
+      ]
+    }, {
+      name: 'Extra',
+      open: false,
+      buildProps: ['background-color', 'box-shadow', 'custom-prop'],
+      properties: [
+        {
+          id: 'custom-prop',
+          name: 'Custom Label',
+          property: 'font-size',
+          type: 'select',
+          defaults: '32px',
+          // List of options, available only for 'select' and 'radio'  types
+          options: [
+            { value: '12px', name: 'Tiny' },
+            { value: '18px', name: 'Medium' },
+            { value: '32px', name: 'Big' },
+          ],
+        }
+      ]
+    }]
   },
 });
 
@@ -244,3 +250,280 @@ editor.Commands.add('set-device-tablet', {
 editor.Commands.add('set-device-mobile', {
   run: editor => editor.setDevice('Mobile')
 });
+
+editor.BlockManager.add('testtwoBlock', {
+  label: 'Table',
+  attributes: { class: 'fa fa-table' },
+  content: `<div class="table-div"><div>Этот текст</div><div>2</div><div>3</div><div>4</div></div><style>.table-div{display:flex;justify-content:space-around;background:green;}</style>`
+})
+
+editor.BlockManager.add('imgSection', {
+  label: 'Section',
+  attributes: { class: 'fa fa-table' },
+  content: `<section class="section-main">
+  <div class="block-main">
+    <img class="block-main--img" src="https://i.forfun.com/jc06tp01.jpeg" alt="">
+    <h1 class="block-main--title">
+      Cool Framework GrapesJS
+    </h1>
+    <p class="block-main--subtitle">use effectively</p>
+  </div>
+</section>
+  <style>
+  .section-main{
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .block-main--img{
+    position: absolute;
+    display: block;
+    top: 10vh;
+    left: 10vw;
+    width: 25vw;
+    max-height: 80vh;
+    height: auto;
+  }
+  .block-main--title{
+    position: absolute;
+    bottom: 20vh;
+    left: 30vw;
+    font-size: 2rem;
+    color: aqua;
+    text-transform: uppercase;
+  }
+  .block-main--subtitle{
+    position: absolute;
+    bottom: 10vh;
+    left: 40vw;
+    font-size: 1.4rem;
+    color: aquamarine;
+    text-transform: uppercase;
+  }</style>`
+})
+
+editor.BlockManager.add('newTableDiv', {
+  label: 'Table DIV',
+  attributes: { class: 'fa fa-table' },
+  draggable: false,
+  content: ` <div class="t-block">
+  <div class="t-block--row">
+    <div class="t-block--item">Текст 1</div>
+    <div class="t-block--item">Текст 2</div>
+    <div class="t-block--item">Текст 3</div>
+    <div class="t-block--item">Текст 4</div>
+  </div>
+  <div class="t-block--row">
+    <div class="t-block--item">Текст 1</div>
+    <div class="t-block--item">Текст 2</div>
+    <div class="t-block--item">Текст 3</div>
+    <div class="t-block--item">Текст 4</div>
+  </div>
+  <div class="t-block--row">
+    <div class="t-block--item">Текст 1</div>
+    <div class="t-block--item">Текст 2</div>
+    <div class="t-block--item">Текст 3</div>
+    <div class="t-block--item">Текст 4</div>
+  </div>
+  <div class="t-block--row">
+    <div class="t-block--item">Текст 1</div>
+    <div class="t-block--item">Текст 2</div>
+    <div class="t-block--item">Текст 3</div>
+    <div class="t-block--item">Текст 4</div>
+  </div>
+  <div class="t-block--row">
+    <div class="t-block--item">Текст 1</div>
+    <div class="t-block--item">Текст 2</div>
+    <div class="t-block--item">Текст 3</div>
+    <div class="t-block--item">Текст 4</div>
+  </div>
+  <div class="t-block--row">
+    <div class="t-block--item">Текст 1</div>
+    <div class="t-block--item">Текст 2</div>
+    <div class="t-block--item">Текст 3</div>
+    <div class="t-block--item">Текст 4</div>
+  </div>
+  <div class="t-block--row">
+    <div class="t-block--item">Текст 1</div>
+    <div class="t-block--item">Текст 2</div>
+    <div class="t-block--item">Текст 3</div>
+    <div class="t-block--item">Текст 4</div>
+  </div>
+  <div class="t-block--row">
+    <div class="t-block--item">Текст 1</div>
+    <div class="t-block--item">Текст 2</div>
+    <div class="t-block--item">Текст 3</div>
+    <div class="t-block--item">Текст 4</div>
+  </div>
+</div>
+<style>
+.t-block{
+  width: 100%;
+  height: auto;
+  margin: 25px 0;
+  padding: 0;
+}
+.t-block--row{
+  display: flex;
+  justify-content: space-between;
+}
+.t-block--item{
+  width: 25%;
+  margin-bottom: -1px;
+  padding: 5px;
+  border: 1px solid #666;
+}
+</style>`
+});
+
+
+editor.BlockManager.add('newTableTable', {
+  label: 'Table tag Table',
+  attributes: { class: 'fa fa-table' },
+  draggable: false,
+  content: ` <table class="table">
+  <tr data-gjs-draggable="none">
+      <td data-gjs-draggable="none"><p data-gjs-draggable="none">Текст</p></td>
+      <td data-gjs-draggable="none"><p data-gjs-draggable="none">Текст</p></td>
+      <td data-gjs-draggable="none"><p data-gjs-draggable="none">Текст</p></td>
+      <td data-gjs-draggable="none"><p data-gjs-draggable="none">Текст</p></td>
+  </tr>
+  <tr>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+  </tr>
+  <tr>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+  </tr>
+  <tr>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+  </tr>
+  <tr>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+  </tr>
+  <tr>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+  </tr>
+  <tr>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+  </tr>
+  <tr>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+      <td><p>Текст</p></td>
+  </tr>
+</table>
+<style>
+.table{
+  width: 100%; 
+  margin: 0;
+  border-collapse: collapse;
+  padding: 0;
+ }
+ .table tr {
+   width: 100%;
+   margin: 0;
+   padding: 0;
+ }
+ .table tr td{
+   width: 25%;
+   margin: -1px;
+   padding: 5px;
+   font-size: 14px;
+   border: 1px solid #666
+ }
+ .table tr td p{
+   margin: 0
+ }
+</style>`
+});
+
+
+let d = document.getElementsByClassName('.d');
+console.log(d);
+
+// editor.Components.addType('my-cmp', {
+//   classes: ['cls'],
+//   content: `<div class="t-block">
+//   <div class="t-block--row">
+//     <div class="t-block--item">Текст 1</div>
+//     <div class="t-block--item">Текст 2</div>
+//     <div class="t-block--item">Текст 3</div>
+//     <div class="t-block--item">Текст 4</div>
+//   </div>
+//   <div class="t-block--row">
+//     <div class="t-block--item">Текст 1</div>
+//     <div class="t-block--item">Текст 2</div>
+//     <div class="t-block--item">Текст 3</div>
+//     <div class="t-block--item">Текст 4</div>
+//   </div>
+//   <div class="t-block--row">
+//     <div class="t-block--item">Текст 1</div>
+//     <div class="t-block--item">Текст 2</div>
+//     <div class="t-block--item">Текст 3</div>
+//     <div class="t-block--item">Текст 4</div>
+//   </div>
+//   <div class="t-block--row">
+//     <div class="t-block--item">Текст 1</div>
+//     <div class="t-block--item">Текст 2</div>
+//     <div class="t-block--item">Текст 3</div>
+//     <div class="t-block--item">Текст 4</div>
+//   </div>
+//   <div class="t-block--row">
+//     <div class="t-block--item">Текст 1</div>
+//     <div class="t-block--item">Текст 2</div>
+//     <div class="t-block--item">Текст 3</div>
+//     <div class="t-block--item">Текст 4</div>
+//   </div>
+//   <div class="t-block--row">
+//     <div class="t-block--item">Текст 1</div>
+//     <div class="t-block--item">Текст 2</div>
+//     <div class="t-block--item">Текст 3</div>
+//     <div class="t-block--item">Текст 4</div>
+//   </div>
+//   <div class="t-block--row">
+//     <div class="t-block--item">Текст 1</div>
+//     <div class="t-block--item">Текст 2</div>
+//     <div class="t-block--item">Текст 3</div>
+//     <div class="t-block--item">Текст 4</div>
+//   </div>
+//   <div class="t-block--row">
+//     <div class="t-block--item">Текст 1</div>
+//     <div class="t-block--item">Текст 2</div>
+//     <div class="t-block--item">Текст 3</div>
+//     <div class="t-block--item">Текст 4</div>
+//   </div>
+// </div>`,
+//   model: {
+//     defaults: {
+//       prop1: 'value1',
+//       prop2: 'value2',
+//     }
+//   }
+// });
+
+
+// editor.BlockManager.add('testBlockNewnewnew', {
+//   label: 'Block New 111',
+//   content: { type: 'my-cmp', prop1: 'value1-EXT', prop2: 'value2-EXT' }
+// })
